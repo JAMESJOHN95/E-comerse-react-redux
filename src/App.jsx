@@ -1,7 +1,6 @@
 import { Navigate,Routes,Route } from 'react-router-dom'
 import './App.css'
 import Footer from './Componants/Footer'
-import Header from './Componants/Header'
 import Home from './Pages/Home'
 import View from './Pages/View'
 import Cart from './Pages/Cart'
@@ -13,7 +12,6 @@ function App() {
 
   return (
     <>
-    <Header/>
     <Routes>
 <Route path =  '/' element = {<Home/>}/> 
 <Route path =  '/Wishlist' element = {<Wishlist/>}/> 

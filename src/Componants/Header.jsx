@@ -1,16 +1,21 @@
 import React from 'react'
-import { Navbar, Button, Container, Form, Nav } from 'react-bootstrap'
+import { Navbar,  Container, Form, Nav,Badge } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { searchproducts } from '../Pages/REDUX/Slice/ProductSlice'
 
 
 
-function Header() {
+function Header({insideHome}) {
+  const dispatch = useDispatch()
+  const wishlistCount = useSelector(state=>state.wishlistreducer).length
+  const cartcount = useSelector(state=>state.cartReducer).length
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary d-flex  justify-content-around">
+      <Navbar style={{zIndex:'10'}} expand="lg" className="bg-body-tertiary d-flex position-fixed top-0 w-100 justify-content-around">
         <Container fluid>
           <div>
-            <Navbar.Brand href="#"><i class="fa-solid fa-cart-shopping"></i> E-CART</Navbar.Brand>
+            <Navbar.Brand href="#"><i class="fa-solid fa-truck"></i> E-CART</Navbar.Brand>
 
           </div>          <div>
             <Navbar.Toggle aria-controls="navbarScroll" />
@@ -22,22 +27,21 @@ function Header() {
               >
 
               </Nav>
-              <Form className="d-flex">
-                <Form.Control
+              <div className="d-flex">
+                { insideHome && <input className="form-control" onChange={(e)=>dispatch(searchproducts(e.target.value.toLowerCase()))}
                   type="search"
                   placeholder="Search"
                   className="me-2"
                   aria-label="Search"
-                />
-                <Button variant="outline-success">Search</Button>
-              </Form>
+                />}
+              </div>
             </Navbar.Collapse>
 
           </div>
           <div className='d-flex'>
-            <Link to = {'/'} className='me-3'>Home</Link>
-            <Link to = {'/Wishlist'} className='me-3'>Wishlist</Link>
-            <Link to  = {'/Cart'} className='me-3'> Cart </Link>
+            <Link to = {'/'} style={{textDecoration:'none'}} className='me-3'>Home</Link>
+            <Link to = {'/Wishlist'} style={{textDecoration:'none'}} className='me-3'><i className="fa-solid fa-heart me-1"></i>Wishlist<Badge className='ms-1' bg="success">{wishlistCount}</Badge></Link>
+            <Link to  = {'/Cart'} style={{textDecoration:'none'}} className='me-3'><i className="fa-solid fa-cart-plus me-1"></i> Cart <Badge className='ms-1' bg="success">{cartcount}</Badge> </Link>
           </div>
         </Container>
       </Navbar></>
